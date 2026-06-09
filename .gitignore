@@ -1,0 +1,30 @@
+# Configuration & Secrets
+config/config.js
+*.env
+.env.local
+
+# Build artifacts
+dist/
+build/
+*.min.js
+*.min.css
+
+# Node (if using build tools later)
+node_modules/
+package-lock.json
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Editor
+.vscode/
+.idea/
+
+# Test coverage
+coverage/
+.nyc_output/
+
+# Logs
+*.log
+npm-debug.log*

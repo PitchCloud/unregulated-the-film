@@ -1,0 +1,920 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UnregulatedTheFilm - Accessibility Checklist</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #2ecc71 0%, #27ae60 100%);
+            color: #333;
+            line-height: 1.6;
+            padding: 20px;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+            padding: 40px;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+            border-bottom: 3px solid #2ecc71;
+            padding-bottom: 20px;
+        }
+
+        h1 {
+            color: #2ecc71;
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            color: #666;
+            font-size: 1.1em;
+            margin-bottom: 5px;
+        }
+
+        .wcag-badge {
+            display: inline-block;
+            background: #27ae60;
+            color: white;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-weight: bold;
+            margin-top: 10px;
+            font-size: 0.9em;
+        }
+
+        .date-info {
+            color: #999;
+            font-size: 0.95em;
+        }
+
+        .section {
+            margin-bottom: 40px;
+        }
+
+        .section-title {
+            font-size: 1.5em;
+            color: white;
+            background: #2ecc71;
+            padding: 12px 20px;
+            border-radius: 6px;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .section-icon {
+            font-size: 1.3em;
+        }
+
+        .test-item {
+            display: flex;
+            align-items: flex-start;
+            padding: 12px;
+            margin-bottom: 10px;
+            background: #f8f9fa;
+            border-left: 4px solid #2ecc71;
+            border-radius: 4px;
+            transition: background 0.3s;
+        }
+
+        .test-item:hover {
+            background: #e8f5e9;
+        }
+
+        .test-item.checked {
+            background: #c8e6c9;
+            border-left-color: #27ae60;
+            opacity: 0.8;
+        }
+
+        .test-item input[type="checkbox"] {
+            width: 20px;
+            height: 20px;
+            min-width: 20px;
+            margin-right: 15px;
+            margin-top: 2px;
+            cursor: pointer;
+            accent-color: #2ecc71;
+        }
+
+        .test-item label {
+            cursor: pointer;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+
+        .test-name {
+            font-weight: 600;
+            color: #333;
+        }
+
+        .test-detail {
+            font-size: 0.9em;
+            color: #666;
+        }
+
+        .wcag-level {
+            display: inline-block;
+            background: #fff3cd;
+            color: #856404;
+            padding: 2px 8px;
+            border-radius: 3px;
+            font-size: 0.8em;
+            font-weight: bold;
+            margin-top: 4px;
+        }
+
+        .critical-item .test-name::before {
+            content: "🔴 ";
+            margin-right: 5px;
+        }
+
+        .critical-item {
+            background: #ffe8e8;
+        }
+
+        .notes-section {
+            margin-top: 30px;
+            padding: 20px;
+            background: #e8f5e9;
+            border-radius: 6px;
+            border-left: 4px solid #27ae60;
+        }
+
+        .notes-section h3 {
+            color: #27ae60;
+            margin-bottom: 10px;
+        }
+
+        textarea {
+            width: 100%;
+            min-height: 100px;
+            padding: 10px;
+            border: 2px solid #2ecc71;
+            border-radius: 4px;
+            font-family: inherit;
+            font-size: 0.95em;
+            resize: vertical;
+        }
+
+        .summary {
+            margin-top: 40px;
+            padding: 20px;
+            background: #d4edda;
+            border-radius: 6px;
+            border-left: 4px solid #28a745;
+        }
+
+        .summary h3 {
+            color: #155724;
+            margin-bottom: 10px;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 30px;
+            background: #e9ecef;
+            border-radius: 15px;
+            overflow: hidden;
+            margin: 10px 0;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #2ecc71, #27ae60);
+            width: 0%;
+            transition: width 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 0.85em;
+        }
+
+        .wcag-info {
+            background: #f0f7ff;
+            border: 2px solid #3498db;
+            border-radius: 6px;
+            padding: 15px;
+            margin-bottom: 30px;
+        }
+
+        .wcag-info h3 {
+            color: #3498db;
+            margin-bottom: 10px;
+        }
+
+        .wcag-info p {
+            margin-bottom: 8px;
+            font-size: 0.95em;
+        }
+
+        .print-info {
+            text-align: center;
+            margin-top: 30px;
+            color: #999;
+            font-size: 0.9em;
+        }
+
+        @media print {
+            body {
+                background: white;
+                padding: 0;
+            }
+
+            .container {
+                max-width: 100%;
+                box-shadow: none;
+            }
+
+            .test-item.checked {
+                opacity: 1;
+            }
+
+            .summary {
+                page-break-inside: avoid;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px;
+            }
+
+            h1 {
+                font-size: 1.8em;
+            }
+
+            .section-title {
+                font-size: 1.2em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>UnregulatedTheFilm.com</h1>
+            <p class="subtitle">Web Accessibility Checklist (WCAG 2.1 AA)</p>
+            <span class="wcag-badge">WCAG 2.1 AA Compliant</span>
+            <p class="date-info">Last Updated: <span id="date"></span></p>
+        </header>
+
+        <div class="wcag-info">
+            <h3>About WCAG 2.1 Compliance</h3>
+            <p><strong>Level A:</strong> Basic accessibility. The minimum standard for web accessibility.</p>
+            <p><strong>Level AA:</strong> Enhanced accessibility. Covers the needs of most users, recommended for compliance.</p>
+            <p><strong>Level AAA:</strong> Advanced accessibility. Maximum level, benefits specialized users.</p>
+            <p style="margin-top: 10px;"><em>This checklist focuses on WCAG 2.1 Level AA compliance.</em></p>
+        </div>
+
+        <div class="summary">
+            <h3>Accessibility Progress</h3>
+            <div class="progress-bar">
+                <div class="progress-fill" id="progressFill">0%</div>
+            </div>
+            <p>Completed: <span id="completed">0</span> / <span id="total">0</span> checks</p>
+        </div>
+
+        <!-- Keyboard Navigation -->
+        <div class="section">
+            <div class="section-title">
+                <span class="section-icon">⌨️</span>
+                Keyboard Navigation
+            </div>
+            <div class="test-item critical-item">
+                <input type="checkbox">
+                <label>
+                    <span class="test-name">All interactive elements are keyboard accessible</span>
+                    <span class="test-detail">Tab through all buttons, links, form fields without mouse</span>
+                    <span class="wcag-level">WCAG 2.1 A</span>
+                </label>
+            </div>
+            <div class="test-item critical-item">
+                <input type="checkbox">
+                <label>
+                    <span class="test-name">Logical tab order</span>
+                    <span class="test-detail">Tab order follows visual flow left-to-right, top-to-bottom</span>
+                    <span class="wcag-level">WCAG 2.1 A</span>
+                </label>
+            </div>
+            <div class="test-item critical-item">
+                <input type="checkbox">
+                <label>
+                    <span class="test-name">No keyboard trap</span>
+                    <span class="test-detail">Can navigate away from any element using keyboard alone</span>
+                    <span class="wcag-level">WCAG 2.1 A</span>
+                </label>
+            </div>
+            <div class="test-item">
+                <input type="checkbox">
+                <label>
+                    <span class="test-name">Focus indicator visible</span>
+                    <span class="test-detail">Clear visual focus outline on all keyboard-navigable elements</span>
+                    <span class="wcag-level">WCAG 2.1 AA</span>
+                </label>
+            </div>
+            <div class="test-item">
+                <input type="checkbox">
+                <label>
+                    <span class="test-name">Focus indicator contrast</span>
+                    <span class="test-detail">Focus outline meets minimum 3:1 contrast ratio</span>
+                    <span class="wcag-level">WCAG 2.1 AA</span>
+                </label>
+            </div>
+            <div class="test-item">
+                <input type="checkbox">
+                <label>
+                    <span class="test-name">Keyboard shortcuts documented</span>
+                    <span class="test-detail">If shortcuts exist, they're documented and avoidable</span>
+                    <span class="wcag-level">WCAG 2.1 A</span>
+                </label>
+            </div>
+        </div>
+
+        <!-- Screen Reader Testing -->
+        <div class="section">
+            <div class="section-title">
+                <span class="section-icon">🔊</span>
+                Screen Reader Testing
+            </div>
+            <div class="test-item critical-item">
+                <input type="checkbox">
+                <label>
+                    <span class="test-name">Page structure with semantic HTML</span>
+                    <span class="test-detail">Uses &lt;header&gt;, &lt;nav&gt;, &lt;main&gt;, &lt;footer&gt;, &lt;section&gt;</span>
+                    <span class="wcag-level">WCAG 2.1 A</span>
+                </label>
+            </div>
+            <div class="test-item critical-item">
+                <input type="checkbox">
+                <label>
+                    <span class="test-name">Alt text on all images</span>
+                    <span class="test-detail">Meaningful alt text, decorative images have alt=""</span>
+                    <span class="wcag-level">WCAG 2.1 A</span>
+                </label>
+            </div>
+            <div class="test-item critical-item">
+                <input type="checkbox">
+                <label>
+                    <span class="test-name">Form labels properly associated</span>
+                    <span class="test-detail">Label elements with 'for' attribute linking to input IDs</span>
+                    <span class="wcag-level">WCAG 2.1 A</span>
+                </label>
+            </div>
+            <div class="test-item critical-item">
+                <input type="checkbox">
+                <label>
+                    <span class="test-name">Page title descriptive</span>
+                    <span class="test-detail">&lt;title&gt; tag describes page content uniquely</span>
+                    <span class="wcag-level">WCAG 2.1 A</span>
+                </label>
+            </div>
+            <div class="test-item">
+                <input type="checkbox">
+                <label>
+                    <span class="test-name">Headings define structure</span>
+                    <span class="test-detail">H1-H6 hierarchy used correctly, not for styling</span>
+                    <span class="wcag-level">WCAG 2.1 A</span>
+                </label>
+            </div>
+            <div class="test-item">
+                <input type="checkbox">
+                <label>
+                    <span class="test-name">ARIA roles and properties</span>
+                    <span class="test-detail">ARIA used appropriately for dynamic content and widgets</span>
+                    <span class="wcag-level">WCAG 2.1 A</span>
+                </label>
+            </div>
+            <div class="test-item">
+                <input type="checkbox">
+                <label>
+                    <span class="test-name">List markup correct</span>
+                    <span class="test-detail">Lists use &lt;ul&gt;, &lt;ol&gt;, &lt;li&gt; tags appropriately</span>
+                    <span class="wcag-level">WCAG 2.1 A</span>
+                </label>
+            </div>
+            <div class="test-item">
+                <input type="checkbox">
+                <label>
+                    <span class="test-name">Table markup semantic</span>
+                    <span class="test-detail">&lt;table&gt;, &lt;th&gt;, &lt;td&gt;, &lt;caption&gt; used correctly</span>
+                    <span class="wcag-level">WCAG 2.1 A</span>
+                </label>
+            </div>
+        </div>
+
+        <!-- Color & Contrast -->
+        <div class="section">
+            <div class="section-title">
+                <span class="section-icon">🎨</span>
+                Color & Contrast
+            </div>
+            <div class="test-item critical-item">
+                <input type="checkbox">
+                <label>
+                    <span class="test-name">Text contrast 4.5:1 (normal text)</span>
+                    <span class="test-detail">Body text meets minimum WCAG AA contrast ratio</span>
+                    <span class="wcag-level">WCAG 2.1 AA</span>
+                </label>
+            </div>
+            <div class="test-item critical-item">
+                <input type="checkbox">
+                <label>
+                    <span class="test-name">Text contrast 3:1 (large text)</span>
+                    <span class="test-detail">Large text (18pt+) has minimum 3:1 contrast</span>
+                    <span class="wcag-level">WCAG 2.1 AA</span>
+                </label>
+            </div>
+            <div class="test-item critical-item">
+                <input type="checkbox">
+                <label>
+                    <span class="test-name">UI component contrast 3:1</span>
+                    <span class="test-detail">Buttons, links, icons have sufficient contrast</span>
+                    <span class="wcag-level">WCAG 2.1 AA</span>
+                </label>
+            </div>
+            <div class="test-item critical-item">
+                <input type="checkbox">
+                <label>
+                    <span class="test-name">Color not only means of conveying info</span>
+                    <span class="test-detail">Information conveyed with text, patterns, icons too</span>
+                    <span class="wcag-level">WCAG 2.1 A</span>
+                </label>
+            </div>
+            <div class="test-item">
+                <input type="checkbox">
+                <label>
+                    <span class="test-name">Focus indicator sufficient contrast</span>
+                    <span class="test-detail">Focus outline visible against both light and dark backgrounds</span>
+                    <span class="wcag-level">WCAG 2.1 AA</span>
+                </label>
+            </div>
+            <div class="test-item">
+                <input type="checkbox">
+                <label>
+                    <span class="test-name">Tested with color blindness simulator</span>
+                    <span class="test-detail">Content readable for deuteranopia, protanopia, tritanopia</span>
+                    <span class="wcag-level">Best Practice</span>
+                </label>
+            </div>
+        </div>
+
+        <!-- Text & Readability -->
+        <div class="section">
+            <div class="section-title">
+                <span class="section-icon">📖</span>
+                Text & Readability
+            </div>
+            <div class="test-item">
+                <input type="checkbox">
+                <label>
+                    <span class="test-name">Language declared in HTML</span>
+                    <span class="test-detail">lang attribute on &lt;html&gt; tag is correct</span>
+                    <span class="wcag-level">WCAG 2.1 A</span>
+                </label>
+            </div>
+            <div class="test-item">
+                <input type="checkbox">
+                <label>
+                    <span class="test-name">Font size minimum 12px</span>
+                    <span class="test-detail">Body text readable at default zoom, no text smaller than 12px</span>
+                    <span class="wcag-level">Best Practice</span>
+                </label>
+            </div>
+            <div class="test-item">
+                <input type="checkbox">
+                <label>
+                    <span class="test-name">Line height sufficient</span>
+                    <span class="test-detail">Line spacing at least 1.5x font size in paragraph text</span>
+                    <span class="wcag-level">Best Practice</span>
+                </label>
+            </div>
+            <div class="test-item">
+                <input type="checkbox">
+                <label>
+                    <span class="test-name">Letter spacing adequate</span>
+                    <span class="test-detail">Letter spacing at least 0.12 times the font size</span>
+                    <span class="wcag-level">Best Practice</span>
+                </label>
+            </div>
+            <div class="test-item">
+                <input type="checkbox">
+                <label>
+                    <span class="test-name">Word spacing adequate</span>
+                    <span class="test-detail">Word spacing at least 0.16 times the font size</span>
+                    <span class="wcag-level">Best Practice</span>
+                </label>
+            </div>
+            <div class="test-item">
+                <input type="checkbox">
+                <label>
+                    <span class="test-name">Text justified with caution</span>
+                    <span class="test-detail">If justified, doesn't impair readability. Left-aligned preferred</span>
+                    <span class="wcag-level">Best Practice</span>
+                </label>
+            </div>
+            <div class="test-item">
+                <input type="checkbox">
+                <label>
+                    <span class="test-name">No text styled as all caps</span>
+                    <span class="test-detail">Uses CSS text-transform instead of typing in caps</span>
+                    <span class="wcag-level">Best Practice</span>
+                </label>
+            </div>
+        </div>
+
+        <!-- Zoom & Responsiveness -->
+        <div class="section">
+            <div class="section-title">
+                <span class="section-icon">🔍</span>
+                Zoom & Responsiveness
+            </div>
+            <div class="test-item critical-item">
+                <input type="checkbox">
+                <label>
+                    <span class="test-name">Page works at 200% zoom</span>
+                    <span class="test-detail">Content readable and functional when zoomed to 200%</span>
+                    <span class="wcag-level">WCAG 2.1 AA</span>
+                </label>
+            </div>
+            <div class="test-item">
+                <input type="checkbox">
+                <label>
+                    <span class="test-name">No fixed viewport restrictions</span>
+                    <span class="test-detail">Doesn't restrict viewport to specific dimensions</span>
+                    <span class="wcag-level">WCAG 2.1 AA</span>
+                </label>
+            </div>
+            <div class="test-item">
+                <input type="checkbox">
+                <label>
+                    <span class="test-name">Text resize doesn't break layout</span>
+                    <span class="test-detail">Increasing text size doesn't cause overlaps or cutoff</span>
+                    <span class="wcag-level">WCAG 2.1 AA</span>
+                </label>
+            </div>
+            <div class="test-item">
+                <input type="checkbox">
+                <label>
+                    <span class="test-name">Responsive to multiple viewports</span>
+                    <span class="test-detail">Works on mobile, tablet, desktop without horizontal scroll</span>
+                    <span class="wcag-level">Best Practice</span>
+                </label>
+            </div>
+            <div class="test-item">
+                <input type="checkbox">
+                <label>
+                    <span class="test-name">No reliance on specific screen size</span>
+                    <span class="test-detail">Content accessible at any viewport width</span>
+                    <span class="wcag-level">WCAG 2.1 AA</span>
+                </label>
+            </div>
+        </div>
+
+        <!-- Forms Accessibility -->
+        <div class="section">
+            <div class="section-title">
+                <span class="section-icon">📋</span>
+                Forms Accessibility
+            </div>
+            <div class="test-item critical-item">
+                <input type="checkbox">
+                <label>
+                    <span class="test-name">All form inputs have labels</span>
+                    <span class="test-detail">&lt;label&gt; elements properly associated with inputs</span>
+                    <span class="wcag-level">WCAG 2.1 A</span>
+                </label>
+            </div>
+            <div class="test-item critical-item">
+                <input type="checkbox">
+                <label>
+                    <span class="test-name">Error identification and suggestion</span>
+                    <span class="test-detail">Errors identified, suggestions provided in text</span>
+                    <span class="wcag-level">WCAG 2.1 AA</span>
+                </label>
+            </div>
+            <div class="test-item critical-item">
+                <input type="checkbox">
+                <label>
+                    <span class="test-name">Required fields marked</span>
+                    <span class="test-detail">Required indicator clear and accessible (text, not just color)</span>
+                    <span class="wcag-level">WCAG 2.1 A</span>
+                </label>
+            </div>
+            <div class="test-item">
+                <input type="checkbox">
+                <label>
+                    <span class="test-name">Instructions clear</span>
+                    <span class="test-detail">Form instructions associated with fields, clear and concise</span>
+                    <span class="wcag-level">Best Practice</span>
+                </label>
+            </div>
+            <div class="test-item">
+                <input type="checkbox">
+                <label>
+                    <span class="test-name">Submit button clear</span>
+                    <span class="test-detail">Submit button label clearly indicates action</span>
+                    <span class="wcag-level">Best Practice</span>
+                </label>
+            </div>
+            <div class="test-item">
+                <input type="checkbox">
+                <label>
+                    <span class="test-name">Form validation accessible</span>
+                    <span class="test-detail">Validation messages in text, not just visual indicators</span>
+                    <span class="wcag-level">WCAG 2.1 AA</span>
+                </label>
+            </div>
+        </div>
+
+        <!-- Motion & Animation -->
+        <div class="section">
+            <div class="section-title">
+                <span class="section-icon">✨</span>
+                Motion & Animation
+            </div>
+            <div class="test-item critical-item">
+                <input type="checkbox">
+                <label>
+                    <span class="test-name">No autoplaying video with sound</span>
+                    <span class="test-detail">Videos don't autoplay with audio, or pause button available</span>
+                    <span class="wcag-level">WCAG 2.1 A</span>
+                </label>
+            </div>
+            <div class="test-item critical-item">
+                <input type="checkbox">
+                <label>
+                    <span class="test-name">No flashing content</span>
+                    <span class="test-detail">Nothing flashes more than 3 times per second (no seizure risk)</span>
+                    <span class="wcag-level">WCAG 2.1 A</span>
+                </label>
+            </div>
+            <div class="test-item">
+                <input type="checkbox">
+                <label>
+                    <span class="test-name">Animations can be disabled</span>
+                    <span class="test-detail">prefers-reduced-motion media query respected</span>
+                    <span class="wcag-level">WCAG 2.1 AA</span>
+                </label>
+            </div>
+            <div class="test-item">
+                <input type="checkbox">
+                <label>
+                    <span class="test-name">Animations provide context</span>
+                    <span class="test-detail">Animated transitions enhance but don't distract from content</span>
+                    <span class="wcag-level">Best Practice</span>
+                </label>
+            </div>
+            <div class="test-item">
+                <input type="checkbox">
+                <label>
+                    <span class="test-name">Users can pause slideshows</span>
+                    <span class="test-detail">Carousel/slideshow has pause, play, next, previous controls</span>
+                    <span class="wcag-level">WCAG 2.1 A</span>
+                </label>
+            </div>
+        </div>
+
+        <!-- Links & Navigation -->
+        <div class="section">
+            <div class="section-title">
+                <span class="section-icon">🧭</span>
+                Links & Navigation
+            </div>
+            <div class="test-item critical-item">
+                <input type="checkbox">
+                <label>
+                    <span class="test-name">Link text descriptive</span>
+                    <span class="test-detail">Links say "Learn More" not "Click Here", describe destination</span>
+                    <span class="wcag-level">WCAG 2.1 A</span>
+                </label>
+            </div>
+            <div class="test-item">
+                <input type="checkbox">
+                <label>
+                    <span class="test-name">Navigation consistent</span>
+                    <span class="test-detail">Navigation menu same position and structure on all pages</span>
+                    <span class="wcag-level">WCAG 2.1 AA</span>
+                </label>
+            </div>
+            <div class="test-item">
+                <input type="checkbox">
+                <label>
+                    <span class="test-name">Breadcrumbs provided</span>
+                    <span class="test-detail">If applicable, breadcrumb navigation helps locate pages</span>
+                    <span class="wcag-level">Best Practice</span>
+                </label>
+            </div>
+            <div class="test-item">
+                <input type="checkbox">
+                <label>
+                    <span class="test-name">Skip link available</span>
+                    <span class="test-detail">Skip to main content link accessible first on page</span>
+                    <span class="wcag-level">WCAG 2.1 A</span>
+                </label>
+            </div>
+            <div class="test-item">
+                <input type="checkbox">
+                <label>
+                    <span class="test-name">Current page indicated</span>
+                    <span class="test-detail">Active/current navigation item marked clearly</span>
+                    <span class="wcag-level">Best Practice</span>
+                </label>
+            </div>
+        </div>
+
+        <!-- Automated Testing Tools -->
+        <div class="section">
+            <div class="section-title">
+                <span class="section-icon">🔧</span>
+                Automated Testing Tools
+            </div>
+            <div class="test-item">
+                <input type="checkbox">
+                <label>
+                    <span class="test-name">Axe DevTools run</span>
+                    <span class="test-detail">Axe accessibility scanner shows no critical issues</span>
+                    <span class="wcag-level">Best Practice</span>
+                </label>
+            </div>
+            <div class="test-item">
+                <input type="checkbox">
+                <label>
+                    <span class="test-name">Lighthouse audit passed</span>
+                    <span class="test-detail">Chrome Lighthouse accessibility score 90+</span>
+                    <span class="wcag-level">Best Practice</span>
+                </label>
+            </div>
+            <div class="test-item">
+                <input type="checkbox">
+                <label>
+                    <span class="test-name">WAVE evaluation</span>
+                    <span class="test-detail">WebAIM WAVE shows no errors, minimal warnings</span>
+                    <span class="wcag-level">Best Practice</span>
+                </label>
+            </div>
+            <div class="test-item">
+                <input type="checkbox">
+                <label>
+                    <span class="test-name">Color Contrast Analyzer</span>
+                    <span class="test-detail">All text colors checked for proper contrast ratios</span>
+                    <span class="wcag-level">Best Practice</span>
+                </label>
+            </div>
+            <div class="test-item">
+                <input type="checkbox">
+                <label>
+                    <span class="test-name">HTML validation</span>
+                    <span class="test-detail">W3C HTML validator shows no errors</span>
+                    <span class="wcag-level">Best Practice</span>
+                </label>
+            </div>
+        </div>
+
+        <!-- Manual Testing with AT -->
+        <div class="section">
+            <div class="section-title">
+                <span class="section-icon">👨‍💻</span>
+                Manual Testing with Assistive Technology
+            </div>
+            <div class="test-item critical-item">
+                <input type="checkbox">
+                <label>
+                    <span class="test-name">NVDA screen reader (Windows)</span>
+                    <span class="test-detail">Page readable and navigable with NVDA</span>
+                    <span class="wcag-level">Best Practice</span>
+                </label>
+            </div>
+            <div class="test-item critical-item">
+                <input type="checkbox">
+                <label>
+                    <span class="test-name">JAWS screen reader (Windows)</span>
+                    <span class="test-detail">Page readable and navigable with JAWS</span>
+                    <span class="wcag-level">Best Practice</span>
+                </label>
+            </div>
+            <div class="test-item critical-item">
+                <input type="checkbox">
+                <label>
+                    <span class="test-name">VoiceOver (macOS/iOS)</span>
+                    <span class="test-detail">Page readable and navigable with VoiceOver</span>
+                    <span class="wcag-level">Best Practice</span>
+                </label>
+            </div>
+            <div class="test-item">
+                <input type="checkbox">
+                <label>
+                    <span class="test-name">TalkBack (Android)</span>
+                    <span class="test-detail">Page readable and navigable with TalkBack</span>
+                    <span class="wcag-level">Best Practice</span>
+                </label>
+            </div>
+            <div class="test-item">
+                <input type="checkbox">
+                <label>
+                    <span class="test-name">Browser zoom to 200%</span>
+                    <span class="test-detail">Content remains usable when magnified 200%</span>
+                    <span class="wcag-level">WCAG 2.1 AA</span>
+                </label>
+            </div>
+        </div>
+
+        <!-- Notes Section -->
+        <div class="notes-section">
+            <h3>Accessibility Issues & Notes</h3>
+            <textarea id="notes" placeholder="Document any accessibility issues found, required fixes, or deviations from WCAG 2.1 AA compliance..."></textarea>
+        </div>
+
+        <div class="print-info">
+            <p>This checklist can be printed or saved as PDF using your browser's print function (Ctrl+P or Cmd+P)</p>
+            <p>For more information, visit <a href="https://www.w3.org/WAI/WCAG21/quickref/" target="_blank">WCAG 2.1 Quick Reference</a></p>
+        </div>
+    </div>
+
+    <script>
+        // Set current date
+        document.getElementById('date').textContent = new Date().toLocaleDateString('en-US', {
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric'
+        });
+
+        // Setup checkboxes
+        const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+        const totalTests = checkboxes.length;
+        document.getElementById('total').textContent = totalTests;
+
+        // Load saved state from localStorage
+        function loadState() {
+            checkboxes.forEach((checkbox, index) => {
+                const saved = localStorage.getItem(`a11y-${index}`);
+                if (saved === 'true') {
+                    checkbox.checked = true;
+                    checkbox.parentElement.classList.add('checked');
+                }
+            });
+            updateProgress();
+        }
+
+        // Update progress
+        function updateProgress() {
+            const completed = document.querySelectorAll('input[type="checkbox"]:checked').length;
+            document.getElementById('completed').textContent = completed;
+            const percentage = Math.round((completed / totalTests) * 100);
+            document.getElementById('progressFill').textContent = percentage + '%';
+            document.getElementById('progressFill').style.width = percentage + '%';
+        }
+
+        // Handle checkbox changes
+        checkboxes.forEach((checkbox, index) => {
+            checkbox.addEventListener('change', () => {
+                if (checkbox.checked) {
+                    checkbox.parentElement.classList.add('checked');
+                    localStorage.setItem(`a11y-${index}`, 'true');
+                } else {
+                    checkbox.parentElement.classList.remove('checked');
+                    localStorage.setItem(`a11y-${index}`, 'false');
+                }
+                updateProgress();
+            });
+        });
+
+        // Auto-save notes
+        const notesField = document.getElementById('notes');
+        notesField.addEventListener('change', () => {
+            localStorage.setItem('a11y-notes', notesField.value);
+        });
+
+        // Load notes from localStorage
+        const savedNotes = localStorage.getItem('a11y-notes');
+        if (savedNotes) {
+            notesField.value = savedNotes;
+        }
+
+        // Initialize
+        loadState();
+    </script>
+</body>
+</html>

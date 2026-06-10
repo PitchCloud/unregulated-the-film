@@ -1,0 +1,782 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UnregulatedTheFilm - Manual Testing Checklist</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #333;
+            line-height: 1.6;
+            padding: 20px;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+            padding: 40px;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+            border-bottom: 3px solid #667eea;
+            padding-bottom: 20px;
+        }
+
+        h1 {
+            color: #667eea;
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            color: #666;
+            font-size: 1.1em;
+            margin-bottom: 5px;
+        }
+
+        .date-info {
+            color: #999;
+            font-size: 0.95em;
+        }
+
+        .section {
+            margin-bottom: 40px;
+        }
+
+        .section-title {
+            font-size: 1.5em;
+            color: white;
+            background: #667eea;
+            padding: 12px 20px;
+            border-radius: 6px;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .section-icon {
+            font-size: 1.3em;
+        }
+
+        .test-item {
+            display: flex;
+            align-items: flex-start;
+            padding: 12px;
+            margin-bottom: 10px;
+            background: #f8f9fa;
+            border-left: 4px solid #667eea;
+            border-radius: 4px;
+            transition: background 0.3s;
+        }
+
+        .test-item:hover {
+            background: #e8ebf8;
+        }
+
+        .test-item.checked {
+            background: #d4edda;
+            border-left-color: #28a745;
+            opacity: 0.7;
+        }
+
+        .test-item input[type="checkbox"] {
+            width: 20px;
+            height: 20px;
+            min-width: 20px;
+            margin-right: 15px;
+            margin-top: 2px;
+            cursor: pointer;
+            accent-color: #667eea;
+        }
+
+        .test-item label {
+            cursor: pointer;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+
+        .test-name {
+            font-weight: 600;
+            color: #333;
+        }
+
+        .test-detail {
+            font-size: 0.9em;
+            color: #666;
+        }
+
+        .notes-section {
+            margin-top: 30px;
+            padding: 20px;
+            background: #f0f5ff;
+            border-radius: 6px;
+            border-left: 4px solid #764ba2;
+        }
+
+        .notes-section h3 {
+            color: #764ba2;
+            margin-bottom: 10px;
+        }
+
+        textarea {
+            width: 100%;
+            min-height: 100px;
+            padding: 10px;
+            border: 2px solid #667eea;
+            border-radius: 4px;
+            font-family: inherit;
+            font-size: 0.95em;
+            resize: vertical;
+        }
+
+        .summary {
+            margin-top: 40px;
+            padding: 20px;
+            background: #fff3cd;
+            border-radius: 6px;
+            border-left: 4px solid #ffc107;
+        }
+
+        .summary h3 {
+            color: #856404;
+            margin-bottom: 10px;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 30px;
+            background: #e9ecef;
+            border-radius: 15px;
+            overflow: hidden;
+            margin: 10px 0;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            width: 0%;
+            transition: width 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 0.85em;
+        }
+
+        .print-info {
+            text-align: center;
+            margin-top: 30px;
+            color: #999;
+            font-size: 0.9em;
+        }
+
+        @media print {
+            body {
+                background: white;
+                padding: 0;
+            }
+
+            .container {
+                max-width: 100%;
+                box-shadow: none;
+            }
+
+            .test-item.checked {
+                opacity: 1;
+            }
+
+            .summary {
+                page-break-inside: avoid;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px;
+            }
+
+            h1 {
+                font-size: 1.8em;
+            }
+
+            .section-title {
+                font-size: 1.2em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>UnregulatedTheFilm.com</h1>
+            <p class="subtitle">Manual Testing & QA Checklist</p>
+            <p class="date-info">Last Updated: <span id="date"></span></p>
+        </header>
+
+        <div class="summary">
+            <h3>Testing Progress</h3>
+            <div class="progress-bar">
+                <div class="progress-fill" id="progressFill">0%</div>
+            </div>
+            <p>Completed: <span id="completed">0</span> / <span id="total">0</span> tests</p>
+        </div>
+
+        <!-- Desktop Testing -->
+        <div class="section">
+            <div class="section-title">
+                <span class="section-icon">🖥️</span>
+                Desktop Testing (1920x1080)
+            </div>
+            <div class="test-item">
+                <input type="checkbox">
+                <label>
+                    <span class="test-name">Homepage loads correctly</span>
+                    <span class="test-detail">Verify all content renders, images load, layout is proper</span>
+                </label>
+            </div>
+            <div class="test-item">
+                <input type="checkbox">
+                <label>
+                    <span class="test-name">Navigation menu functions</span>
+                    <span class="test-detail">All menu items clickable, dropdowns work, hover states visible</span>
+                </label>
+            </div>
+            <div class="test-item">
+                <input type="checkbox">
+                <label>
+                    <span class="test-name">Hero image displays at full width</span>
+                    <span class="test-detail">No stretching, proper aspect ratio, responsive to 1920px width</span>
+                </label>
+            </div>
+            <div class="test-item">
+                <input type="checkbox">
+                <label>
+                    <span class="test-name">Text readability and sizing</span>
+                    <span class="test-detail">Font sizes appropriate, line-height readable, color contrast sufficient</span>
+                </label>
+            </div>
+            <div class="test-item">
+                <input type="checkbox">
+                <label>
+                    <span class="test-name">Footer renders properly</span>
+                    <span class="test-detail">All footer links visible, columns aligned, copyright notice present</span>
+                </label>
+            </div>
+        </div>
+
+        <!-- Tablet Testing -->
+        <div class="section">
+            <div class="section-title">
+                <span class="section-icon">📱</span>
+                Tablet Testing (768x1024)
+            </div>
+            <div class="test-item">
+                <input type="checkbox">
+                <label>
+                    <span class="test-name">Responsive layout adapts</span>
+                    <span class="test-detail">Layout adjusts for 768px width, no horizontal scrolling</span>
+                </label>
+            </div>
+            <div class="test-item">
+                <input type="checkbox">
+                <label>
+                    <span class="test-name">Navigation becomes hamburger menu</span>
+                    <span class="test-detail">Menu collapses into mobile icon at appropriate breakpoint</span>
+                </label>
+            </div>
+            <div class="test-item">
+                <input type="checkbox">
+                <label>
+                    <span class="test-name">Images scale appropriately</span>
+                    <span class="test-detail">No pixelation, proper aspect ratios maintained</span>
+                </label>
+            </div>
+            <div class="test-item">
+                <input type="checkbox">
+                <label>
+                    <span class="test-name">Touch targets are adequate</span>
+                    <span class="test-detail">Buttons and links sized for finger tapping (min 44x44px)</span>
+                </label>
+            </div>
+            <div class="test-item">
+                <input type="checkbox">
+                <label>
+                    <span class="test-name">Orientation changes handled</span>
+                    <span class="test-detail">Layout works in both portrait and landscape orientations</span>
+                </label>
+            </div>
+        </div>
+
+        <!-- Mobile Testing -->
+        <div class="section">
+            <div class="section-title">
+                <span class="section-icon">📲</span>
+                Mobile Testing (375x667)
+            </div>
+            <div class="test-item">
+                <input type="checkbox">
+                <label>
+                    <span class="test-name">Single column layout</span>
+                    <span class="test-detail">Content stacks vertically, no horizontal scroll needed</span>
+                </label>
+            </div>
+            <div class="test-item">
+                <input type="checkbox">
+                <label>
+                    <span class="test-name">Mobile menu works</span>
+                    <span class="test-detail">Hamburger menu opens/closes, all items accessible</span>
+                </label>
+            </div>
+            <div class="test-item">
+                <input type="checkbox">
+                <label>
+                    <span class="test-name">Images optimized for mobile</span>
+                    <span class="test-detail">Fast loading, proper compression, no excessive bandwidth</span>
+                </label>
+            </div>
+            <div class="test-item">
+                <input type="checkbox">
+                <label>
+                    <span class="test-name">Text is readable</span>
+                    <span class="test-detail">No zooming required to read content, font size sufficient</span>
+                </label>
+            </div>
+            <div class="test-item">
+                <input type="checkbox">
+                <label>
+                    <span class="test-name">Modal/overlay behavior</span>
+                    <span class="test-detail">Modals properly fullscreen or overlay on mobile, closeable</span>
+                </label>
+            </div>
+        </div>
+
+        <!-- Form Testing -->
+        <div class="section">
+            <div class="section-title">
+                <span class="section-icon">📝</span>
+                Form Testing
+            </div>
+            <div class="test-item">
+                <input type="checkbox">
+                <label>
+                    <span class="test-name">Form inputs accept data</span>
+                    <span class="test-detail">Text fields, select dropdowns, checkboxes all functional</span>
+                </label>
+            </div>
+            <div class="test-item">
+                <input type="checkbox">
+                <label>
+                    <span class="test-name">Form validation works</span>
+                    <span class="test-detail">Required fields show errors, email format validated</span>
+                </label>
+            </div>
+            <div class="test-item">
+                <input type="checkbox">
+                <label>
+                    <span class="test-name">Submit button functionality</span>
+                    <span class="test-detail">Button disabled during submission, loading state visible</span>
+                </label>
+            </div>
+            <div class="test-item">
+                <input type="checkbox">
+                <label>
+                    <span class="test-name">Success message appears</span>
+                    <span class="test-detail">After submission, confirmation message displays clearly</span>
+                </label>
+            </div>
+            <div class="test-item">
+                <input type="checkbox">
+                <label>
+                    <span class="test-name">Error handling</span>
+                    <span class="test-detail">Invalid inputs show helpful error messages</span>
+                </label>
+            </div>
+            <div class="test-item">
+                <input type="checkbox">
+                <label>
+                    <span class="test-name">Form reset works</span>
+                    <span class="test-detail">Reset button clears all fields correctly</span>
+                </label>
+            </div>
+        </div>
+
+        <!-- Video Testing -->
+        <div class="section">
+            <div class="section-title">
+                <span class="section-icon">🎬</span>
+                Video Testing
+            </div>
+            <div class="test-item">
+                <input type="checkbox">
+                <label>
+                    <span class="test-name">Videos load properly</span>
+                    <span class="test-detail">No loading errors, preview image displays before play</span>
+                </label>
+            </div>
+            <div class="test-item">
+                <input type="checkbox">
+                <label>
+                    <span class="test-name">Playback controls functional</span>
+                    <span class="test-detail">Play, pause, progress bar, volume controls all work</span>
+                </label>
+            </div>
+            <div class="test-item">
+                <input type="checkbox">
+                <label>
+                    <span class="test-name">Fullscreen mode works</span>
+                    <span class="test-detail">Fullscreen button functions on all browsers and devices</span>
+                </label>
+            </div>
+            <div class="test-item">
+                <input type="checkbox">
+                <label>
+                    <span class="test-name">Responsive video embeds</span>
+                    <span class="test-detail">Videos scale with container, maintain aspect ratio</span>
+                </label>
+            </div>
+            <div class="test-item">
+                <input type="checkbox">
+                <label>
+                    <span class="test-name">Video quality options</span>
+                    <span class="test-detail">Quality settings available if applicable</span>
+                </label>
+            </div>
+        </div>
+
+        <!-- Analytics Testing -->
+        <div class="section">
+            <div class="section-title">
+                <span class="section-icon">📊</span>
+                Analytics Testing
+            </div>
+            <div class="test-item">
+                <input type="checkbox">
+                <label>
+                    <span class="test-name">Google Analytics tracking</span>
+                    <span class="test-detail">Events firing correctly, tracked in GA dashboard</span>
+                </label>
+            </div>
+            <div class="test-item">
+                <input type="checkbox">
+                <label>
+                    <span class="test-name">Page view tracking</span>
+                    <span class="test-detail">Each page load recorded, URL path correct</span>
+                </label>
+            </div>
+            <div class="test-item">
+                <input type="checkbox">
+                <label>
+                    <span class="test-name">Button click tracking</span>
+                    <span class="test-detail">CTA clicks logged with correct labels</span>
+                </label>
+            </div>
+            <div class="test-item">
+                <input type="checkbox">
+                <label>
+                    <span class="test-name">Form submission tracking</span>
+                    <span class="test-detail">Form submissions recorded in analytics</span>
+                </label>
+            </div>
+            <div class="test-item">
+                <input type="checkbox">
+                <label>
+                    <span class="test-name">Conversion goals defined</span>
+                    <span class="test-detail">Key actions flagged as conversions in GA</span>
+                </label>
+            </div>
+        </div>
+
+        <!-- Browser Compatibility -->
+        <div class="section">
+            <div class="section-title">
+                <span class="section-icon">🌐</span>
+                Browser Compatibility
+            </div>
+            <div class="test-item">
+                <input type="checkbox">
+                <label>
+                    <span class="test-name">Chrome/Chromium</span>
+                    <span class="test-detail">Latest version, all features functional</span>
+                </label>
+            </div>
+            <div class="test-item">
+                <input type="checkbox">
+                <label>
+                    <span class="test-name">Firefox</span>
+                    <span class="test-detail">Latest version, layout and styling correct</span>
+                </label>
+            </div>
+            <div class="test-item">
+                <input type="checkbox">
+                <label>
+                    <span class="test-name">Safari</span>
+                    <span class="test-detail">Latest version, responsive design works</span>
+                </label>
+            </div>
+            <div class="test-item">
+                <input type="checkbox">
+                <label>
+                    <span class="test-name">Edge</span>
+                    <span class="test-detail">Latest version, compatibility maintained</span>
+                </label>
+            </div>
+            <div class="test-item">
+                <input type="checkbox">
+                <label>
+                    <span class="test-name">Mobile browsers</span>
+                    <span class="test-detail">Chrome Mobile, Safari Mobile, Firefox Mobile tested</span>
+                </label>
+            </div>
+        </div>
+
+        <!-- SEO & Meta Testing -->
+        <div class="section">
+            <div class="section-title">
+                <span class="section-icon">🔍</span>
+                SEO & Meta Testing
+            </div>
+            <div class="test-item">
+                <input type="checkbox">
+                <label>
+                    <span class="test-name">Meta title tags</span>
+                    <span class="test-detail">Unique, descriptive titles on each page (50-60 chars)</span>
+                </label>
+            </div>
+            <div class="test-item">
+                <input type="checkbox">
+                <label>
+                    <span class="test-name">Meta descriptions</span>
+                    <span class="test-detail">Present on all pages, compelling, 150-160 chars</span>
+                </label>
+            </div>
+            <div class="test-item">
+                <input type="checkbox">
+                <label>
+                    <span class="test-name">Open Graph tags</span>
+                    <span class="test-detail">og:title, og:description, og:image present</span>
+                </label>
+            </div>
+            <div class="test-item">
+                <input type="checkbox">
+                <label>
+                    <span class="test-name">Twitter Card tags</span>
+                    <span class="test-detail">twitter:card, twitter:title, twitter:description set</span>
+                </label>
+            </div>
+            <div class="test-item">
+                <input type="checkbox">
+                <label>
+                    <span class="test-name">Heading hierarchy</span>
+                    <span class="test-detail">H1-H6 tags used properly, single H1 per page</span>
+                </label>
+            </div>
+            <div class="test-item">
+                <input type="checkbox">
+                <label>
+                    <span class="test-name">Canonical tags</span>
+                    <span class="test-detail">Present to prevent duplicate content issues</span>
+                </label>
+            </div>
+            <div class="test-item">
+                <input type="checkbox">
+                <label>
+                    <span class="test-name">robots.txt and sitemap.xml</span>
+                    <span class="test-detail">Files present and properly configured</span>
+                </label>
+            </div>
+        </div>
+
+        <!-- Performance Testing -->
+        <div class="section">
+            <div class="section-title">
+                <span class="section-icon">⚡</span>
+                Performance Testing
+            </div>
+            <div class="test-item">
+                <input type="checkbox">
+                <label>
+                    <span class="test-name">Page load time</span>
+                    <span class="test-detail">Homepage loads in under 3 seconds on average connection</span>
+                </label>
+            </div>
+            <div class="test-item">
+                <input type="checkbox">
+                <label>
+                    <span class="test-name">Image optimization</span>
+                    <span class="test-detail">Images compressed, using appropriate formats (WebP where possible)</span>
+                </label>
+            </div>
+            <div class="test-item">
+                <input type="checkbox">
+                <label>
+                    <span class="test-name">Caching enabled</span>
+                    <span class="test-detail">Browser caching headers set, CDN caching configured</span>
+                </label>
+            </div>
+            <div class="test-item">
+                <input type="checkbox">
+                <label>
+                    <span class="test-name">JavaScript minification</span>
+                    <span class="test-detail">JS files minified and concatenated where appropriate</span>
+                </label>
+            </div>
+            <div class="test-item">
+                <input type="checkbox">
+                <label>
+                    <span class="test-name">CSS optimization</span>
+                    <span class="test-detail">CSS minified, unused styles removed</span>
+                </label>
+            </div>
+            <div class="test-item">
+                <input type="checkbox">
+                <label>
+                    <span class="test-name">Lighthouse score</span>
+                    <span class="test-detail">Performance score above 90, Accessibility above 95</span>
+                </label>
+            </div>
+        </div>
+
+        <!-- Links & External Services -->
+        <div class="section">
+            <div class="section-title">
+                <span class="section-icon">🔗</span>
+                Links & External Services
+            </div>
+            <div class="test-item">
+                <input type="checkbox">
+                <label>
+                    <span class="test-name">Internal links functional</span>
+                    <span class="test-detail">All site links go to correct pages, no 404s</span>
+                </label>
+            </div>
+            <div class="test-item">
+                <input type="checkbox">
+                <label>
+                    <span class="test-name">External links work</span>
+                    <span class="test-detail">Social media, partner links valid and accessible</span>
+                </label>
+            </div>
+            <div class="test-item">
+                <input type="checkbox">
+                <label>
+                    <span class="test-name">Email links functional</span>
+                    <span class="test-detail">mailto: links open email client correctly</span>
+                </label>
+            </div>
+            <div class="test-item">
+                <input type="checkbox">
+                <label>
+                    <span class="test-name">Social media integration</span>
+                    <span class="test-detail">Share buttons work, social feeds load if embedded</span>
+                </label>
+            </div>
+            <div class="test-item">
+                <input type="checkbox">
+                <label>
+                    <span class="test-name">Third-party scripts</span>
+                    <span class="test-detail">Payment processors, tracking codes load without errors</span>
+                </label>
+            </div>
+            <div class="test-item">
+                <input type="checkbox">
+                <label>
+                    <span class="test-name">API connections</span>
+                    <span class="test-detail">External data loads correctly, error handling works</span>
+                </label>
+            </div>
+        </div>
+
+        <!-- Notes Section -->
+        <div class="notes-section">
+            <h3>Testing Notes & Issues Found</h3>
+            <textarea id="notes" placeholder="Document any issues, bugs, or observations during testing..."></textarea>
+        </div>
+
+        <div class="print-info">
+            <p>This checklist can be printed or saved as PDF using your browser's print function (Ctrl+P or Cmd+P)</p>
+        </div>
+    </div>
+
+    <script>
+        // Set current date
+        document.getElementById('date').textContent = new Date().toLocaleDateString('en-US', {
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric'
+        });
+
+        // Setup checkboxes
+        const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+        const totalTests = checkboxes.length;
+        document.getElementById('total').textContent = totalTests;
+
+        // Load saved state from localStorage
+        function loadState() {
+            checkboxes.forEach((checkbox, index) => {
+                const saved = localStorage.getItem(`test-${index}`);
+                if (saved === 'true') {
+                    checkbox.checked = true;
+                    checkbox.parentElement.classList.add('checked');
+                }
+            });
+            updateProgress();
+        }
+
+        // Update progress
+        function updateProgress() {
+            const completed = document.querySelectorAll('input[type="checkbox"]:checked').length;
+            document.getElementById('completed').textContent = completed;
+            const percentage = Math.round((completed / totalTests) * 100);
+            document.getElementById('progressFill').textContent = percentage + '%';
+            document.getElementById('progressFill').style.width = percentage + '%';
+        }
+
+        // Handle checkbox changes
+        checkboxes.forEach((checkbox, index) => {
+            checkbox.addEventListener('change', () => {
+                if (checkbox.checked) {
+                    checkbox.parentElement.classList.add('checked');
+                    localStorage.setItem(`test-${index}`, 'true');
+                } else {
+                    checkbox.parentElement.classList.remove('checked');
+                    localStorage.setItem(`test-${index}`, 'false');
+                }
+                updateProgress();
+            });
+        });
+
+        // Auto-save notes
+        const notesField = document.getElementById('notes');
+        notesField.addEventListener('change', () => {
+            localStorage.setItem('test-notes', notesField.value);
+        });
+
+        // Load notes from localStorage
+        const savedNotes = localStorage.getItem('test-notes');
+        if (savedNotes) {
+            notesField.value = savedNotes;
+        }
+
+        // Initialize
+        loadState();
+    </script>
+</body>
+</html>

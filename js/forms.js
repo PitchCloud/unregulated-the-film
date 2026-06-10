@@ -20,8 +20,8 @@
 
   // Form selectors
   const SELECTORS = {
-    filmNewsletterForm: '#film-newsletter-form',
-    hoaNewsletterForm: '#hoa-newsletter-form',
+    filmNewsletterForm: '#film-newsletter',
+    hoaNewsletterForm: '#hoa-newsletter',
     stickyFooterClose: '#sticky-footer-close',
     stickyFooter: '#sticky-footer',
     supportBtn: '#support-cta-1',
@@ -159,17 +159,13 @@
   // Handle donate button
   function handleDonate(e) {
     e.preventDefault();
-    // TODO: Replace with actual donation link from config
-    const donateLink = 'https://payment.processor.com/donate/UNIQUE_ID';
-    window.open(donateLink, '_blank');
+    window.open('https://square.link/u/BxYhlvkj', '_blank');
   }
 
   // Handle shop button
   function handleShop(e) {
     e.preventDefault();
-    // TODO: Replace with actual merch shop link from config
-    const shopLink = 'https://printful.or.shopify.com/shop';
-    window.open(shopLink, '_blank');
+    window.open('https://unregulatedmerch.printful.me', '_blank');
   }
 
   // Handle share button

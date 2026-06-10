@@ -584,7 +584,7 @@ a {
   max-width: var(--max-width-lg);
   margin: 0 auto;
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(2, 1fr);
   gap: var(--spacing-lg);
   margin-bottom: var(--spacing-lg);
 }
@@ -625,4 +625,163 @@ a {
 .footer-bottom p {
   font-size: var(--font-size-tiny);
   margin: 0;
+}
+
+/* ============================================
+   FLOATING CONTACT BUTTON
+   ============================================ */
+
+.contact-fab {
+  position: fixed;
+  bottom: 90px;
+  right: 20px;
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  background-color: var(--color-red);
+  color: var(--color-white);
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 98;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25);
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.contact-fab:hover {
+  background-color: var(--color-red-dark);
+  transform: scale(1.08);
+}
+
+/* Move button down when sticky footer is hidden */
+.sticky-footer.hidden ~ .contact-fab,
+body:has(.sticky-footer.hidden) .contact-fab {
+  bottom: 20px;
+}
+
+/* ============================================
+   CONTACT MODAL
+   ============================================ */
+
+.contact-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--spacing-md);
+}
+
+.contact-modal[hidden] {
+  display: none;
+}
+
+.contact-modal-overlay {
+  position: absolute;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.55);
+}
+
+.contact-modal-box {
+  position: relative;
+  background-color: var(--color-white);
+  border-radius: 6px;
+  width: 100%;
+  max-width: 480px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+  overflow: hidden;
+}
+
+.contact-modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: var(--color-navy);
+  padding: var(--spacing-md) var(--spacing-lg);
+}
+
+.contact-modal-header h3 {
+  color: var(--color-white);
+  font-size: 18px;
+  margin: 0;
+}
+
+.contact-modal-close {
+  background: transparent;
+  border: none;
+  color: var(--color-white);
+  font-size: 26px;
+  line-height: 1;
+  cursor: pointer;
+  padding: 0;
+  opacity: 0.8;
+  transition: opacity 0.2s ease;
+}
+
+.contact-modal-close:hover {
+  opacity: 1;
+}
+
+.contact-form {
+  padding: var(--spacing-lg);
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+}
+
+.contact-form-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.contact-form-field label {
+  font-size: var(--font-size-small);
+  font-weight: 600;
+  color: var(--color-navy);
+  text-transform: uppercase;
+  letter-spacing: var(--letter-spacing-small);
+}
+
+.contact-form-field input,
+.contact-form-field textarea {
+  padding: 10px 12px;
+  border: 1px solid var(--color-gray-border);
+  border-radius: 4px;
+  font-size: var(--font-size-small);
+  font-family: var(--font-family);
+  color: var(--color-gray-dark);
+  transition: border-color 0.2s ease;
+}
+
+.contact-form-field input:focus,
+.contact-form-field textarea:focus {
+  outline: none;
+  border-color: var(--color-navy);
+}
+
+.contact-form-field textarea {
+  resize: vertical;
+  min-height: 110px;
+}
+
+.contact-form-status {
+  font-size: var(--font-size-small);
+  min-height: 20px;
+}
+
+.contact-form-status.success {
+  color: #2e7d32;
+}
+
+.contact-form-status.error {
+  color: var(--color-red);
+}
+
+.contact-submit {
+  width: 100%;
+  justify-content: center;
 }

@@ -16,6 +16,10 @@
       endpoint: 'YOUR_HOA_NEWSLETTER_API_ENDPOINT',
       list: 'hoa',
     },
+    // Formspree endpoint for contact form — sign up at formspree.io,
+    // create a form pointing to UnregulatedTheFilm@gmail.com, then
+    // replace the placeholder below with your form URL.
+    contactEndpoint: 'https://formspree.io/f/YOUR_FORM_ID',
   };
 
   // Form selectors
@@ -35,6 +39,7 @@
     bindFormEvents();
     bindButtonEvents();
     initStickyFooter();
+    initContactModal();
   }
 
   // Bind form submission events
@@ -209,6 +214,80 @@
         }
       }
     }
+  }
+
+  // Contact modal
+  function initContactModal() {
+    const fab = document.getElementById('contact-fab');
+    const modal = document.getElementById('contact-modal');
+    const closeBtn = document.getElementById('contact-modal-close');
+    const overlay = document.getElementById('contact-modal-overlay');
+    const form = document.getElementById('contact-form');
+
+    if (!fab || !modal) return;
+
+    function openModal() {
+      modal.hidden = false;
+      document.body.style.overflow = 'hidden';
+      modal.querySelector('input, textarea').focus();
+    }
+
+    function closeModal() {
+      modal.hidden = true;
+      document.body.style.overflow = '';
+    }
+
+    fab.addEventListener('click', openModal);
+    closeBtn.addEventListener('click', closeModal);
+    overlay.addEventListener('click', closeModal);
+
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape' && !modal.hidden) closeModal();
+    });
+
+    form.addEventListener('submit', function(e) {
+      e.preventDefault();
+      const status = document.getElementById('contact-form-status');
+      const submitBtn = form.querySelector('.contact-submit');
+      const name = form.querySelector('#contact-name').value.trim();
+      const email = form.querySelector('#contact-email').value.trim();
+      const message = form.querySelector('#contact-message').value.trim();
+
+      if (!name || !validateEmail(email) || !message) {
+        status.textContent = 'Please fill in all fields with a valid email address.';
+        status.className = 'contact-form-status error';
+        return;
+      }
+
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Sending...';
+      status.textContent = '';
+      status.className = 'contact-form-status';
+
+      fetch(CONFIG.contactEndpoint, {
+        method: 'POST',
+        headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name, email, message }),
+      })
+      .then(function(res) {
+        if (res.ok) {
+          status.textContent = 'Message sent! We\'ll be in touch soon.';
+          status.className = 'contact-form-status success';
+          form.reset();
+          setTimeout(closeModal, 2500);
+        } else {
+          throw new Error('Server error');
+        }
+      })
+      .catch(function() {
+        status.textContent = 'Something went wrong. Please try again.';
+        status.className = 'contact-form-status error';
+      })
+      .finally(function() {
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Send Message';
+      });
+    });
   }
 
   // Initialize on DOM ready

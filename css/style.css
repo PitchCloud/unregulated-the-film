@@ -589,11 +589,16 @@ a {
   margin-bottom: var(--spacing-lg);
 }
 
-.footer-column h3 {
+.footer-column {
+  text-align: left;
+}
+
+.footer-column h4 {
   color: var(--color-white);
   font-size: var(--font-size-tiny);
   font-weight: 700;
   text-transform: uppercase;
+  letter-spacing: var(--letter-spacing-small);
   margin: 0 0 var(--spacing-sm) 0;
 }
 

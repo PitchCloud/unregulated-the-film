@@ -1,0 +1,51 @@
+# Images Directory Placeholder
+
+This directory contains images for the Unregulated film website.
+
+## Expected Image Assets:
+
+- **poster.jpg** - Main movie poster (referenced in og:image)
+  - Recommended: 1200x630px minimum for social sharing
+  - Format: JPEG, optimized for web
+  - Purpose: Featured in Open Graph and Twitter Card meta tags
+
+- **favicon.svg** - Website favicon
+  - Format: SVG
+  - Size: 32x32px (or scalable)
+  - Purpose: Browser tab icon and bookmarks
+
+## Image Optimization Guidelines:
+
+1. **All images should be optimized for web:**
+   - Use JPEG for photographs (85-90% quality)
+   - Use PNG for graphics with transparency
+   - Use WebP for modern browsers (with JPEG fallback)
+   - Use SVG for icons and scalable graphics
+
+2. **File Size Targets:**
+   - Poster: < 150 KB
+   - Icons: < 5 KB
+   - General images: < 100 KB each
+
+3. **Responsive Images:**
+   - Consider creating @2x versions for high-DPI displays
+   - Use srcset for responsive image loading
+
+4. **Caching:**
+   - Images are cached for 1 year per .htaccess configuration
+   - Once images are optimized and uploaded, they will be cached aggressively
+   - Update versioning in URLs if rapid changes are needed (e.g., poster.jpg?v=2)
+
+## Adding Images:
+
+To add images to this directory:
+1. Optimize the image using tools like TinyPNG, ImageOptim, or Squoosh
+2. Place the optimized file in this directory
+3. Update HTML references if needed
+4. Commit and push to repository
+
+## Performance Impact:
+
+- Gzip compression is enabled for SVG files
+- Browser caching is configured (1 year for images)
+- This is part of the performance optimization in Task 9

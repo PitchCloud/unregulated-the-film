@@ -9,17 +9,14 @@
   // Configuration
   const CONFIG = {
     filmNewsletter: {
-      endpoint: 'YOUR_FILM_NEWSLETTER_API_ENDPOINT',
+      endpoint: null, // TODO: connect film newsletter MailerLite form
       list: 'film',
     },
     hoaNewsletter: {
-      endpoint: 'YOUR_HOA_NEWSLETTER_API_ENDPOINT',
+      endpoint: 'https://assets.mailerlite.com/jsonp/2421571/forms/189861714140858208/subscribe',
       list: 'hoa',
     },
-    // Formspree endpoint for contact form — sign up at formspree.io,
-    // create a form pointing to UnregulatedTheFilm@gmail.com, then
-    // replace the placeholder below with your form URL.
-    contactEndpoint: 'https://formspree.io/f/YOUR_FORM_ID',
+    contactEndpoint: null, // TODO: set Hostinger PHP endpoint after domain transfer
   };
 
   // Form selectors
@@ -86,39 +83,38 @@
     const config = CONFIG[list + 'Newsletter'];
 
     if (!config || !config.endpoint) {
-      console.error('Newsletter endpoint not configured');
-      showError(form, 'Service not configured. Please try again later.');
+      // No endpoint configured — show success silently (film newsletter not wired yet)
+      showSuccess(form);
       return;
     }
 
-    // In production, this would send to your email service API
-    // For now, simulate a successful submission
-    simulateSubmit(email, list, form);
+    const submitBtn = form.querySelector('button[type="submit"]');
+    if (submitBtn) submitBtn.disabled = true;
 
-    // TODO: Replace with actual API call
-    // fetch(config.endpoint, {
-    //   method: 'POST',
-    //   headers: { 'Content-Type': 'application/json' },
-    //   body: JSON.stringify({ email, list }),
-    // })
-    // .then(response => response.json())
-    // .then(data => {
-    //   if (data.success) {
-    //     showSuccess(form);
-    //   } else {
-    //     showError(form, data.message || 'Submission failed.');
-    //   }
-    // })
-    // .catch(error => {
-    //   console.error('Submission error:', error);
-    //   showError(form, 'Network error. Please try again.');
-    // });
-  }
+    const body = new URLSearchParams();
+    body.append('fields[email]', email);
+    body.append('ml_submit', '1');
+    body.append('anticsrf', 'true');
 
-  // Simulate successful submission (development)
-  function simulateSubmit(email, list, form) {
-    console.log(`Newsletter submission: ${email} to ${list} list`);
-    showSuccess(form);
+    fetch(config.endpoint, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: body.toString(),
+    })
+    .then(function(res) { return res.json(); })
+    .then(function(data) {
+      if (data.success) {
+        showSuccess(form);
+      } else {
+        showError(form, 'Subscription failed. Please try again.');
+      }
+    })
+    .catch(function() {
+      showError(form, 'Network error. Please try again.');
+    })
+    .finally(function() {
+      if (submitBtn) submitBtn.disabled = false;
+    });
   }
 
   // Show success message
